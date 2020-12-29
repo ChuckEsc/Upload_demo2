@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.mapper.FilesDao">
+<!--    根据用户的id去查询文件-->
+    <select id="findFiles" parameterType="java.lang.Integer" resultType="Files">
+        select * from t_files where userId = #{userId};
+    </select>
+
+<!--    保存用户上传的文件信息-->
+    <insert id="save" parameterType="Files" useGeneratedKeys="true" keyProperty="id">
+        insert into t_files values(
+        #{id},#{path},#{oldFileName},#{newFileName},#{ext},
+            #{size},#{type},#{isImg},#{downloadCounts},#{uploadTime},#{userId}
+        )
+    </insert>
+
+<!--    根据文件id 获取文件信息-->
+    <select id="findById" parameterType="java.lang.Integer" resultType="Files" >
+        select * from t_files where id=#{id}
+    </select>
+
+<!--    更新下载次数-->
+    <update id="updateDownloadCounts" parameterType="Files">
+        update t_files set downloadCounts=#{downloadCounts} where id=#{id}
+    </update>
+
+<!--    根据id删除记录-->
+    <delete id="deleteById" parameterType="int">
+        delete from t_files where id=#{id}
+    </delete>
+</mapper>
